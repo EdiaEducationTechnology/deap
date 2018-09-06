@@ -128,7 +128,7 @@ class Strategy(object):
                            parameters.
         """
         population.sort(key=lambda ind: ind.fitness, reverse=True)
-        population = numpy.array([ind.parameters for ind in population])
+        population = numpy.array([ind[:] for ind in population])
 
         old_centroid = self.centroid
         self.centroid = numpy.dot(self.weights, population[0:self.mu])
