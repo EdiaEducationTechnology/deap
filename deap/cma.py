@@ -128,6 +128,7 @@ class Strategy(object):
                            parameters.
         """
         population.sort(key=lambda ind: ind.fitness, reverse=True)
+        population = numpy.array([ind.parameters for ind in population])
 
         old_centroid = self.centroid
         self.centroid = numpy.dot(self.weights, population[0:self.mu])
@@ -151,7 +152,7 @@ class Strategy(object):
             * c_diff
 
         # Update covariance matrix
-        artmp = population[0:self.mu] - old_centroid
+        artmp = population[0:self.mu] - old_centroid  # FIXME
         self.C = (1 - self.ccov1 - self.ccovmu + (1 - hsig) *
                   self.ccov1 * self.cc * (2 - self.cc)) * self.C \
             + self.ccov1 * numpy.outer(self.pc, self.pc) \
